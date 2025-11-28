@@ -1,0 +1,3 @@
+[build]
+publish="webapp/dist"
+command="npm run build"

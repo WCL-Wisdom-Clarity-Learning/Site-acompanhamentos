@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Documentação técnica — W.C.L</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<header class="site-header"><div class="container"><a href="../index.html" class="logo"><img src="img/logo.png" alt="Logo" class="site-logo"> W.C.L 🚀</a></div></header>
+<main class="container">
+<h1>Documentação Técnica</h1>
+<section>
+<h2>Visão geral</h2>
+<p>Esta versão do site inclui otimizações de imagens, uma página de relatório com gráficos e um pipeline de build com Vite. Também há integração de CI para deploy contínuo via GitHub Actions.</p>
+</section>
+<section>
+<h2>Otimização de imagens</h2>
+<ul>
+<li>Conversão automática para WebP.</li>
+<li>Geração de variações responsivas: 320, 640, 1024, 1600 (quando aplicável).</li>
+<li>Placeholder em base64 gerado para carregamento progressivo.</li>
+</ul>
+</section>
+<section>
+<h2>Build (Vite)</h2>
+<p>Há um scaffold Vite em <code>/webapp</code>. Comandos:</p>
+<pre><code>npm install
+npm run dev   # desenvolvimento
+npm run build # gera /webapp/dist</code></pre>
+</section>
+<section>
+<h2>CI / Deploy</h2>
+<p>O workflow GitHub Actions (<code>.github/workflows/ci.yml</code>) faz:</p>
+<ol>
+<li>Instala dependências Node</li>
+<li>Executa build (npm run build)</li>
+<li>Publica conteúdo de <code>/webapp/dist</code> para a branch <code>gh-pages</code></li>
+</ol>
+<p>Para que o deploy funcione automaticamente, configure o secret <code>GH_PAT</code> (opcional — o action usa o token do GitHub por padrão).</p>
+</section>
+</main>
+</body>
+</html>

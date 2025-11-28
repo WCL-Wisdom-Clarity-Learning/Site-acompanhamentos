@@ -47,7 +47,7 @@
       <div class="cards" id="contribGrid">
         <!-- exemplo de cartão -->
         <article class="contrib-card">
-          <img data-src="img/Rank_Kits_por_PDV.jpg" alt="Rank Kits" class="lazy" />
+          <img data-src="img/Rank_Kits_por_PDV-1024.webp" alt="Rank Kits" class="lazy" />
           <h3>Rank Kits por PDV</h3>
           <p>Relatório de performance por ponto de venda, com indicadores atualizados.</p>
           <p><a href="pages/rank.html" class="btn-outline">Ver relatório</a></p>
@@ -77,7 +77,31 @@
         </div>
       </form>
     </section>
-  </main>
+  
+<figure class="responsive-figure">
+  <picture>
+    <source type="image/webp" srcset="../img/Rank_Kits_por_PDV-320.webp 320w, ../img/Rank_Kits_por_PDV-640.webp 640w, ../img/Rank_Kits_por_PDV-1024.webp 1024w" sizes="(max-width:640px) 100vw, 640px">
+    <img src="../img/Rank_Kits_por_PDV-640.webp" alt="Rank Kits" style="width:100%;border-radius:12px;" loading="lazy">
+  </picture>
+  <figcaption>Rank Kits por PDV — imagem gerada e otimizada.</figcaption>
+</figure>
+<canvas id="rankChart" width="800" height="400" style="max-width:100%;margin-top:20px"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('rankChart').getContext('2d');
+const labels = ['PDV A','PDV B','PDV C','PDV D','PDV E','PDV F'];
+const data = [120, 95, 80, 65, 50, 30];
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: [{ label: 'Kits vendidos', data: data, borderRadius:6, backgroundColor: 'rgba(255,122,24,0.9)'}]
+  },
+  options: {responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true}}}
+});
+</script>
+
+</main>
 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
