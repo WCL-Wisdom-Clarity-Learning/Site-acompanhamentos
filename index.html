@@ -20,12 +20,41 @@ header{padding:16px;display:flex;align-items:center;gap:12px;}
     .grid-2{grid-template-columns:1fr 1fr;}
 }
 </style>
+
+<style>
+.main-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#0d0d0d;border-bottom:1px solid #333;}
+.main-header .left{display:flex;align-items:center;gap:10px;}
+.main-header .menu a{margin:0 10px;color:white;text-decoration:none;font-size:0.95rem;}
+.main-header .menu a:hover{color:#ff7a00;}
+.main-header .icons a{margin-left:10px;color:white;text-decoration:none;}
+.contact-btn{background:#ff7a00;padding:6px 14px;border-radius:8px;color:white;}
+.site-logo{width:42px;height:42px;border-radius:50%;object-fit:cover;}
+</style>
+
 </head>
 <body>
-<header>
-<img src="img/DESENVOLVIDOPOR.png" class="site-logo" alt="Logo">
-<h2>W.C.L 🚀</h2>
+
+<header class="main-header">
+  <div class="left">
+    <img src="img/DESENVOLVIDOPOR.png" class="site-logo" alt="Logo">
+    <h2>W.C.L 🚀</h2>
+  </div>
+  <nav class="menu">
+    <a href="index.html">Início</a>
+    <a href="pages/contribuicoes.html">Contribuições</a>
+    <a href="pages/opensource.html">OpenSource</a>
+    <a href="rank_loja.html">Rank Loja</a>
+    <a href="rank_vd.html">Rank VD</a>
+  </nav>
+  <div class="icons">
+    <a href="#"><span>in</span></a>
+    <a href="#"><span>ig</span></a>
+    <a href="#"><span>yt</span></a>
+    <a href="#"><span>gh</span></a>
+    <a href="pages/contato.html" class="contact-btn">Contato</a>
+  </div>
 </header>
+
 
 <div class="container">
 <h2 class="mobile-title">Selecione um Ranking</h2>
