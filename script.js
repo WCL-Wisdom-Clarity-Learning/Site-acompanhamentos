@@ -1,68 +1,62 @@
-// Improved site JS: menu toggle, theme toggle, lazy load and simple data-driven project cards
-document.addEventListener('DOMContentLoaded', ()=>{
-  const menuToggle = document.getElementById('menuToggle');
-  const navList = document.getElementById('navList');
-  menuToggle.addEventListener('click', ()=>{
-    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', String(!expanded));
-    navList.classList.toggle('show');
-  });
+const lojasLabels = ["BR","CN","SP","VP","ST","MS","CF","PF","SD","TP"];
+const lojasValues = [68.45,66.83,66.00,60.08,50.00,49.27,46.62,36.22,16.06,13.04];
+const vdLabels = ["ERS","ERP","CD"];
+const vdValues = [97.61,96.43,94.57];
 
-  const themeToggle = document.getElementById('themeToggle');
-  const body = document.body;
-  // remember preference
-  const savedTheme = localStorage.getItem('site-theme');
-  if(savedTheme) body.className = savedTheme;
+const trace = {
+    x: lojasValues,
+    y: lojasLabels.map((l,i)=>`🏆 ${i+1} ${l}`),
+    type: 'bar',
+    orientation: 'h',
+    text: lojasValues.map(v=>v.toFixed(2)+"%"),
+    textposition: 'outside',
+    marker: {color: 'teal'}
+};
 
-  themeToggle.addEventListener('click', ()=>{
-    const isLight = body.classList.contains('theme-light');
-    body.className = isLight ? 'theme-dark' : 'theme-light';
-    localStorage.setItem('site-theme', body.className);
-    themeToggle.setAttribute('aria-pressed', String(!isLight));
-  });
+const layout = {
+    title: 'Pirâmide - Rank de Lojas',
+    xaxis: {title: 'Percentual (%)'},
+    yaxis: {autorange: 'reversed'},
+    margin: {l: 100},
+    transition: {duration: 500, easing: 'cubic-in-out'}
+};
 
-  // lazy load images
-  const lazyImgs = document.querySelectorAll('img.lazy');
-  if('IntersectionObserver' in window){
-    const obs = new IntersectionObserver((entries, observer)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
-          observer.unobserve(img);
-        }
-      });
-    }, {rootMargin: '50px'});
-    lazyImgs.forEach(img=>obs.observe(img));
-  } else {
-    lazyImgs.forEach(img=>{ img.src = img.dataset.src; img.classList.remove('lazy') });
-  }
+Plotly.newPlot('grafico', [trace], layout);
 
-  // generate example project cards to demonstrate structure
-  const projects = [
-    {title: 'Dashboard de KPIs', desc: 'Painel interativo com filtros, gráficos e exportação.'},
-    {title: 'Automação de Relatórios', desc: 'Scripts para coleta e consolidação diária de dados.'},
-    {title: 'Integração API', desc: 'Pontos de integração com backends e webhook.'},
-    {title: 'Monitoramento', desc: 'Alertas e monitoramento de eventos e SLAs.'},
-    {title: 'Design System', desc: 'Componentes reutilizáveis e tokens de design.'},
-    {title: 'Otimização de Performance', desc: 'Melhorias de carregamento e caching.'}
-  ];
-  const grid = document.getElementById('projectsGrid');
-  projects.forEach(p=>{
-    const card = document.createElement('article');
-    card.className = 'project-card';
-    card.innerHTML = `<h3>${p.title}</h3><p>${p.desc}</p><p><a class="btn-outline" href="#contato">Solicitar</a></p>`;
-    grid.appendChild(card);
-  });
+function animarLojas() {
+    Plotly.animate('grafico', {
+        data: [{x: lojasValues, y: lojasLabels.map((l,i)=>`🏆 ${i+1} ${l}`), text: lojasValues.map(v=>v.toFixed(2)+"%"), marker: {color: 'teal'}}],
+        layout: {title: 'Pirâmide - Rank de Lojas'}
+    }, {transition: {duration: 700, easing: 'cubic-in-out'}});
+}
 
-  // simplistic contact form handler (no external network calls)
-  const form = document.getElementById('contactForm');
-  form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const data = new FormData(form);
-    // show success and reset
-    alert('Obrigado, ' + (data.get('nome') || 'usuário') + '! Mensagem recebida.');
-    form.reset();
-  });
+function animarVD() {
+    Plotly.animate('grafico', {
+        data: [{x: vdValues, y: vdLabels.map((l,i)=>`🏆 ${i+1} ${l}`), text: vdValues.map(v=>v.toFixed(2)+"%"), marker: {color: 'darkblue'}}],
+        layout: {title: 'Pirâmide - Rank de VD'}
+    }, {transition: {duration: 700, easing: 'cubic-in-out'}});
+}
+
+function baixarCSV() {
+    let csv = "Categoria,Percentual\n";
+    const titulo = document.querySelector('.plotly .title').innerText;
+    if(titulo.includes('VD')) {
+        vdLabels.forEach((l,i)=>{ csv += `${l},${vdValues[i]}\n`; });
+    } else {
+        lojasLabels.forEach((l,i)=>{ csv += `${l},${lojasValues[i]}\n`; });
+    }
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'dados.csv';
+    a.click();
+}
+
+function baixarImagem() {
+    Plotly.downloadImage('grafico', {format: 'png', filename: 'grafico'});
+}
+
+document.getElementById('toggle-theme').addEventListener('click', ()=>{
+    document.body.classList.toggle('dark-theme');
 });

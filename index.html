@@ -1,78 +1,35 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>W.C.L 🚀</title>
-<link rel="stylesheet" href="./css/style.css">
-<!--<style>
-body{margin:0;background:#ffffff;color:white;font-family:Arial;}
-header{padding:16px;display:flex;align-items:center;gap:12px;}
-.site-logo{width:42px;height:42px;border-radius:50%;object-fit:cover;}
-.container{padding:20px;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.card{background:#000000;border-radius:18px;overflow:hidden;box-shadow:0 4px 12px rgba(0, 0, 0, 0.467);}
-.card img{width:100%;height:140px;object-fit:cover;cursor:pointer;}
-.card h3{text-align:center;padding:10px;font-size:1rem;}
-.mobile-title{text-align:center;font-size:1.4rem;margin-bottom:20px;}
-@media(max-width:600px){
-    .grid-2{grid-template-columns:1fr 1fr;}
-}
-</style>
-
-<style>
-.main-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#000000;border-bottom:1px solid #333;}
-.main-header .left{display:flex;align-items:center;gap:10px;}
-.main-header .menu a{margin:0 10px;color:white;text-decoration:none;font-size:0.95rem;}
-.main-header .menu a:hover{color:#ff7a00;}
-.main-header .icons a{margin-left:10px;color:white;text-decoration:none;}
-.contact-btn{background:#ff7a00;padding:6px 14px;border-radius:8px;color:white;}
-.site-logo{width:50px;height:50px;border-radius:70%;object-fit:cover;}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Acompanhamentos</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
-<body>-->
+<body>
+    <header>
+        <div class="logo">Site Acompanhamentos</div>
+        <nav>
+            <button id="toggle-theme">🌙 ☀</button>
+        </nav>
+    </header>
 
-<header class="main-header">
-  <div class="left">
-    <img src="img/W.C.L.jpg" class="site-logo" alt="Logo">
-    <h2>W.C.L 🚀</h2>
-  </div>
-  <nav class="menu">
-    <a href="index.html">Início</a>
-    <a href="pages/contribuicoes.html">Contribuições</a>
-    <a href="pages/opensource.html">OpenSource</a>
-    <a href="rank_loja.html">Rank Loja</a>
-    <a href="rank_vd.html">Rank VD</a>
-  </nav>
-  <div class="icons">
-    <a href="https://www.linkedin.com/in/wellington-carlos-lima" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://www.instagram.com/limaedeia/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com/@WCLTechProdutividade" aria-label="YouTube" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
-          <a href="https://github.com/WCL-Wisdom-Clarity-Learning" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-    <a href="pages/contato.html" class="contact-btn">Contato</a>
-  </div>
-</header>
+    <main>
+        <h1>Dashboard de Acompanhamentos</h1>
+        <div class="btn-container">
+            <button class="btn-primary" onclick="animarLojas()">🏆 Rank de Lojas</button>
+            <button class="btn-primary" onclick="animarVD()">🏆 Rank de VD</button>
+            <button class="btn-secondary" onclick="baixarCSV()">⬇️ Baixar CSV</button>
+            <button class="btn-secondary" onclick="baixarImagem()">🖼️ Baixar Imagem</button>
+        </div>
+        <div id="grafico"></div>
+    </main>
 
+    <footer>
+        <p>&copy; 2025 Grupo Nova Era - Todos os direitos reservados</p>
+    </footer>
 
-<div class="container">
-<h2 class="mobile-title">Selecione um Ranking</h2>
-<div class="grid-2">
-    <div class="card">
-        <img src="img/Gráfico.png" onclick="location.href='rank_loja.html'">
-        <h3>Rank Loja</h3>
-    </div>
-    <div class="card">
-        <img src="img/Gráfico.png" onclick="location.href='rank_vd.html'">
-        <h3>Rank VD</h3>
-    </div>
-</div>
-</div>
+    <script src="/script.js"></script>
 </body>
-
-<!-- Scripts -->
-  <script src="/script.js" defer></script>
-</body>
-</html>
 </html>
