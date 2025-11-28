@@ -1,69 +1,66 @@
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
+/* Improved, responsive and accessible CSS */
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:#ff7a18;
+  --muted:#9aa4b2;
+  --text:#e6eef6;
+  --radius:12px;
+  --container:1100px;
+  --gap:20px;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
-:root {
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --primary-color: #0078D7;
-    --secondary-color: #28a745;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#071023 0%, #0b1220 100%);color:var(--text);line-height:1.45;font-size:16px;-webkit-font-smoothing:antialiased;}
+.container{max-width:var(--container);margin:0 auto;padding:24px;}
+.header-inner{display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.site-header{background:rgba(255,255,255,0.02);backdrop-filter: blur(6px);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,0.03);}
+.logo{font-weight:700;font-size:1.1rem;color:var(--text);text-decoration:none;}
+.rocket{margin-left:6px}
+
+.main-nav{display:flex;align-items:center;gap:12px}
+.menu-toggle{display:none;background:transparent;border:0;color:var(--text);font-size:1.2rem}
+.nav-list{list-style:none;margin:0;padding:0;display:flex;gap:16px}
+.nav-list a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px}
+.nav-list a:hover, .nav-list a:focus{color:var(--text);background:rgba(255,255,255,0.02)}
+
+/* Hero */
+.hero{padding:48px 0;text-align:center}
+.hero h1{font-size:2rem;margin:0 0 8px}
+.lead{color:var(--muted);max-width:60ch;margin:0 auto 16px}
+
+/* Projects grid */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:16px}
+.project-card, .contrib-card, .card{background:linear-gradient(180deg,var(--card),#071023);padding:18px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+
+/* Cards */
+.contrib-card img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:12px}
+.contrib-card h3{margin:6px 0}
+.btn-primary{display:inline-block;background:var(--accent);color:#05111a;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
+.btn-outline{display:inline-block;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text)}
+
+/* Forms */
+form label{display:block;margin-bottom:12px;color:var(--muted)}
+input, textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
+
+/* Footer */
+.site-footer{padding:24px 0;border-top:1px solid rgba(255,255,255,0.03);margin-top:40px;text-align:center;color:var(--muted)}
+
+/* Responsive */
+@media (max-width:900px){
+  .projects-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .header-inner{flex-wrap:wrap;align-items:center}
+  .menu-toggle{display:inline-block}
+  .nav-list{display:none;width:100%;flex-direction:column;gap:0;background:transparent;padding:8px 0}
+  .nav-list.show{display:flex}
+  .projects-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.5rem}
 }
 
-.dark-theme {
-    --bg-color: #121212;
-    --text-color: #f0f0f0;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: var(--primary-color);
-    color: white;
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: var(--primary-color);
-    color: white;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.btn-container {
-    margin: 20px;
-}
-
-button {
-    padding: 10px 15px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.btn-secondary {
-    background-color: var(--secondary-color);
-    color: white;
-}
-
-#grafico {
-    width: 95%;
-    max-width: 800px;
-    margin: auto;
-}
+/* Theme toggle */
+body.theme-light{--bg:#f7f8fb;--card:#ffffff;--accent:#ff7a18;--muted:#58606b;--text:#0b1220;background:linear-gradient(180deg,#ffffff 0%, #f3f6fb 100%)}
+body.theme-light .site-header{background:rgba(11,18,32,0.03)}

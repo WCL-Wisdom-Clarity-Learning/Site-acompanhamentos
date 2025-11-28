@@ -1,36 +1,88 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Acompanhamentos</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>W.C.L — Acompanhamentos & Contribuições</title>
+  <meta name="description" content="Portfólio e acompanhamentos — melhorias, relatórios e contribuições.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="script.js"></script>
 </head>
-<body>
-    <header>
-        <div class="logo">Site Acompanhamentos</div>
-        <nav>
-            <button id="toggle-theme">🌙 Alternar Tema</button>
-        </nav>
-    </header>
+<body class="theme-light">
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" href="#" aria-label="W.C.L Home">W.C.L<span class="rocket">🚀</span></a>
+      <nav class="main-nav" role="navigation" aria-label="Menu principal">
+        <button id="menuToggle" aria-expanded="false" aria-controls="navList" class="menu-toggle">☰</button>
+        <ul id="navList" class="nav-list">
+          <li><a href="#projetos">Projetos</a></li>
+          <li><a href="#contribuicoes">Contribuições</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <button id="themeToggle" aria-pressed="false" title="Alternar tema">🌓</button>
+      </div>
+    </div>
+  </header>
 
-    <main>
-        <h1>Dashboard de Acompanhamentos</h1>
-        <div class="btn-container">
-            <button class="btn-primary" onclick="animarLojas()">🏆 Rank de Lojas</button>
-            <button class="btn-primary" onclick="animarVD()">🏆 Rank de VD</button>
-            <button class="btn-secondary" onclick="baixarCSV()">⬇️ Baixar CSV</button>
-            <button class="btn-secondary" onclick="baixarImagem()">🖼️ Baixar Imagem</button>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Soluções, Acompanhamentos e Contribuições</h1>
+      <p class="lead">Visualizações, relatórios e uma versão modernizada do site — otimizado, acessível e responsivo.</p>
+      <p><a class="btn-primary" href="#projetos">Ver Projetos</a></p>
+    </section>
+
+    <section id="projetos" class="projects" aria-labelledby="proj-title">
+      <h2 id="proj-title">Projetos em Destaque</h2>
+      <div class="projects-grid" id="projectsGrid" aria-live="polite">
+        <!-- Cards gerados via JS -->
+      </div>
+    </section>
+
+    <section id="contribuicoes" class="contributions" aria-labelledby="contrib-title">
+      <h2 id="contrib-title">Contribuições</h2>
+      <div class="cards" id="contribGrid">
+        <!-- exemplo de cartão -->
+        <article class="contrib-card">
+          <img data-src="img/Rank_Kits_por_PDV.jpg" alt="Rank Kits" class="lazy" />
+          <h3>Rank Kits por PDV</h3>
+          <p>Relatório de performance por ponto de venda, com indicadores atualizados.</p>
+          <p><a href="pages/rank.html" class="btn-outline">Ver relatório</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="sobre" class="about" aria-labelledby="about-title">
+      <h2 id="about-title">Sobre</h2>
+      <p>Site reconstruído com foco em acessibilidade, performance e manutenção. Use este pacote como base para deploy.</p>
+    </section>
+
+    <section id="contato" class="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contato</h2>
+      <form id="contactForm">
+        <label>Nome
+          <input name="nome" type="text" required />
+        </label>
+        <label>Email
+          <input name="email" type="email" required />
+        </label>
+        <label>Mensagem
+          <textarea name="mensagem" rows="4" required></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Enviar</button>
         </div>
-        <div id="grafico"></div>
-    </main>
+      </form>
+    </section>
+  </main>
 
-    <footer>
-        <p>&copy; 2025 Grupo Nova Era - Todos os direitos reservados</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>© W.C.L — Versão melhorada. <small>Arquivos otimizados e estrutura organizada.</small></p>
+    </div>
+  </footer>
 </body>
 </html>
