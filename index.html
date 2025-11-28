@@ -3,32 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Acompanhamentos</title>
+    <title>Rank de Kits por PDV</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <header>
-        <div class="logo">Site Acompanhamentos</div>
+        <div class="logo">Rank Kits</div>
         <nav>
             <button id="toggle-theme">🌙 ☀</button>
         </nav>
     </header>
 
     <main>
-        <h1>Dashboard de Acompanhamentos</h1>
+        <h1>Dashboard</h1>
         <div class="btn-container">
             <button class="btn-primary" onclick="animarLojas()">🏆 Rank de Lojas</button>
             <button class="btn-primary" onclick="animarVD()">🏆 Rank de VD</button>
-            <button class="btn-secondary" onclick="baixarCSV()">⬇️ Baixar CSV</button>
             <button class="btn-secondary" onclick="baixarImagem()">🖼️ Baixar Imagem</button>
         </div>
         <div id="grafico"></div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Grupo Nova Era - Todos os direitos reservados</p>
-    </footer>
+    <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> W.C.L 🚀 | Meu Portfólio</p>
+    <div id="ads-space" aria-label="Espaço reservado para anúncios">
+      <p><strong>Espaço para Ads:</strong> Cole seu script aqui</p>
+    </div>
+  </footer>
 
     <script src="script.js"></script>
 </body>
