@@ -1,0 +1,32 @@
+
+/* responsive override - added by assistant */
+html,body{height:100%;}
+img{max-width:100%;height:auto;}
+.container, .wrapper, .content {max-width:1100px;margin:0 auto;padding:0 16px;box-sizing:border-box;}
+/* grid cards: make responsive */
+.cards, .grid, .projects-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:18px;
+  align-items:start;
+}
+/* card adjustments */
+.card, .project-card, .contrib-card {
+  border-radius:12px;
+  padding:18px;
+  box-sizing:border-box;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+/* header/nav responsive */
+.nav, nav, .main-nav {display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.nav .menu, .nav-links {display:flex;flex-wrap:wrap;gap:10px;}
+/* footer spacing */
+footer{padding:18px 8px;}
+
+/* small screens tweaks */
+@media (max-width:600px){
+  h1,h2,h3{font-size:1.15rem;}
+  .cards, .grid, .projects-grid {gap:12px;}
+  .card, .project-card, .contrib-card {padding:14px;}
+  header .logo {flex: 1 1 100%;}
+}
