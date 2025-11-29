@@ -67,4 +67,42 @@ function animarLojas() {
         data: [{
             x: lojasValues,
             y: lojasLabels.map((l,i)=>`🏆 ${i+1} ${l}`),
-            text: lojasValues.map(v=>v.toFixe
+            text: lojasValues.map(v=>v.toFixed(2)+"%"),
+            marker: { color: 'teal' },
+            width: 0.45
+        }],
+        layout: { title: "Rank de Lojas" }
+    },{
+        transition: { duration: 700, easing: 'cubic-in-out' }
+    });
+}
+
+function animarVD() {
+    Plotly.animate('grafico', {
+        data: [{
+            x: vdValues,
+            y: vdLabels.map((l,i)=>`🏆 ${i+1} ${l}`),
+            text: vdValues.map(v=>v.toFixed(2)+"%"),
+            marker: { color: 'darkblue' },
+            width: 0.45
+        }],
+        layout: { title: "Rank de VD" }
+    },{
+        transition: { duration: 700, easing: 'cubic-in-out' }
+    });
+}
+
+
+// ===== DOWNLOAD =====
+function baixarImagem() {
+    Plotly.downloadImage('grafico', {
+        format: 'png',
+        filename: 'grafico'
+    });
+}
+
+
+// ===== TEMA ESCURO =====
+document.getElementById('toggle-theme').addEventListener('click', ()=>{
+    document.body.classList.toggle('dark-theme');
+});
