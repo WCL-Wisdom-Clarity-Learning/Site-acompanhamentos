@@ -3,35 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rank de Kits por PDV</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Acompanhamentos | W.C.L</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./assets/responsive-overrides.css">
+
+    <!-- Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
+
 <body>
-    <header>
-        <div class="logo">Rank Kits</div>
-        <nav>
-            <button id="toggle-theme">🌙 ☀</button>
-        </nav>
+
+    <!-- CABEÇALHO -->
+    <header class="header">
+        <div class="logo-area">
+            <!-- SUA LOGO VAI AQUI -->
+            <img src="img/W.C.L.jpg" alt="Logo" class="logo-img">
+        </div>
+        <h1 class="titulo-header">Acompanhamentos</h1>
     </header>
 
-    <main>
-        <h1>Dashboard</h1>
-        <div class="btn-container">
-            <button class="btn-primary" onclick="animarLojas()">🏆 Rank de Lojas</button>
-            <button class="btn-primary" onclick="animarVD()">🏆 Rank de VD</button>
-            <button class="btn-secondary" onclick="baixarImagem()">🖼️ Baixar Imagem</button>
-        </div>
-        <div id="grafico"></div>
-    </main>
+    <!-- SEÇÃO PRINCIPAL -->
+    <main class="container">
 
-    <!-- FOOTER -->
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> W.C.L 🚀 | Meu Portfólio</p>
-    <div id="ads-space" aria-label="Espaço reservado para anúncios">
-      <p><strong>Espaço para Ads:</strong> Cole seu script aqui</p>
-    </div>
-  </footer>
+        <div class="cards-wrapper">
+
+            <!-- CARD 1 - RANK LOJA -->
+            <div class="card" onclick="mostrarRank('loja')">
+                <img src="img/Meta-Atingida.png" class="card-img">
+                <p class="card-title">Rank Loja</p>
+            </div>
+
+            <!-- CARD 2 - RANK VD -->
+            <div class="card" onclick="mostrarRank('vd')">
+                <img src="img/Meta-Atingida.png" class="card-img">
+                <p class="card-title">Rank VD</p>
+            </div>
+
+        </div>
+
+        <!-- ÁREA DO GRÁFICO -->
+        <section id="graficoArea" class="grafico-area oculto">
+            <button class="btn-voltar" onclick="voltar()">← Voltar</button>
+            <h2 id="tituloRank"></h2>
+            <div id="graficoRank"></div>
+        </section>
+
+    </main>
 
     <script src="script.js"></script>
 </body>
