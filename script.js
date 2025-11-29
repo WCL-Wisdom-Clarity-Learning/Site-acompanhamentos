@@ -1,43 +1,58 @@
 /* ============================================================
    🔵 1. EDITAR OS DADOS AQUI — (COLAR NOVOS DADOS SEM MEXER NO RESTO)
-   Basta atualizar as duas listas abaixo quando receber novos percentuais.
    ============================================================ */
-const lojasLabels = ["BR","CN","SP","VP","ST","MS","CF","PF"];   // ← (A) EDITAR NOMES DAS LOJAS
-const lojasValues = [68.45,66.83,66.00,60.08,50.00,49.27,46.62,36.22]; // ← (B) EDITAR VALORES (%)
+const lojasLabels = ["BR", "CN", "SP", "VP", "ST", "MS", "CF", "PF"];
+const lojasValues = [68.45, 66.83, 66.00, 60.08, 50.00, 49.27, 46.62, 36.22];
 
-const vdLabels = ["ERS","ERP","CD"]; // ← (C) EDITAR NOMES VD
-const vdValues = [97.61,96.43,94.57]; // ← (D) EDITAR VALORES VD
+const vdLabels = ["ERS", "ERP", "CD"];
+const vdValues = [97.61, 96.43, 94.57];
 /* ============================================================ */
 
 
 
 /* ============================================================
    🔵 2. CONFIGURAÇÃO VISUAL DO GRÁFICO
-   (barras mais curtas, rótulos mais visíveis e espaçados)
    ============================================================ */
-const barThickness = 22;   // ← (E) AQUI ALTERA O TAMANHO DA BARRA (pode deixar 20–26)
-const barGap = 0.35;       // ← (F) ESPAÇAMENTO ENTRE BARRAS (0.2 a 0.5)
-const fontSize = 18;       // ← (G) TAMANHO DOS RÓTULOS
-const colorLojas = "teal"; // ← (H) COR LOJAS
-const colorVD = "darkblue";// ← (I) COR VD
+const barThickness = 22;
+const barGap = 0.35;
+const fontSize = 18;
+
+const color1 = "#d4af37"; // ouro
+const color2 = "#c0c0c0"; // prata
+const color3 = "#cd7f32"; // bronze
+const colorDefault = "#008b8b"; // padrão
 
 
 
 /* ============================================================
-   🔵 3. TRAÇO PRINCIPAL (formatação igual à imagem)
+   🔵 3. CRIA TRACE COM CORES DINÂMICAS POR POSIÇÃO
    ============================================================ */
-function criarTrace(valores, labels, cor) {
+function criarTrace(valores, labels) {
+
+    // Ordena automaticamente
+    const combinado = valores
+        .map((v, i) => ({ valor: v, label: labels[i] }))
+        .sort((a, b) => b.valor - a.valor);
+
+    const valoresOrd = combinado.map(o => o.valor);
+    const labelsOrd = combinado.map(o => o.label);
+
+    // Cores por ranking
+    const cores = valoresOrd.map((_, i) => {
+        if (i === 0) return color1;
+        if (i === 1) return color2;
+        if (i === 2) return color3;
+        return colorDefault;
+    });
+
     return {
-        x: valores,
-        y: labels.map((l,i)=>`🏆 ${i+1}   ${l}`),
+        x: valoresOrd,
+        y: labelsOrd.map((l, i) => `🏆 ${i + 1}   ${l}`),
         type: "bar",
         orientation: "h",
-        text: valores.map(v => v.toFixed(2) + "%"),
+        text: valoresOrd.map(v => v.toFixed(2) + "%"),
         textposition: "outside",
-        marker: {
-            color: cor,
-            line: { width: 1 }
-        },
+        marker: { color: cores, line: { width: 1 } },
         textfont: { size: fontSize },
         hoverinfo: "none",
         width: barThickness
@@ -47,57 +62,65 @@ function criarTrace(valores, labels, cor) {
 
 
 /* ============================================================
-   🔵 4. LAYOUT — FUNDO TRANSPARENTE + MAIS ESPAÇO
+   🔵 4. LAYOUT — FUNDO TRANSPARENTE
    ============================================================ */
 const layout = {
     title: "",
-    xaxis: {
-        title: "",
-        showgrid: false,
-        zeroline: false,
-        tickfont: { size: 16 }
-    },
-    yaxis: {
-        autorange: "reversed",
-        tickfont: { size: 18 }
-    },
+    xaxis: { showgrid: false, zeroline: false, tickfont: { size: 16 } },
+    yaxis: { autorange: "reversed", tickfont: { size: 18 } },
     margin: { l: 140, r: 80, t: 40, b: 40 },
     bargap: barGap,
-    plot_bgcolor: "rgba(0,0,0,0)",     // ← FUNDO DO GRÁFICO TRANSPARENTE
-    paper_bgcolor: "rgba(0,0,0,0)"     // ← FUNDO TOTAL TRANSPARENTE
+    plot_bgcolor: "rgba(0,0,0,0)",
+    paper_bgcolor: "rgba(0,0,0,0)"
 };
 
 
 
 /* ============================================================
-   🔵 5. CRIA GRÁFICO INICIAL (LOJAS)
+   🔵 5. FUNÇÃO PRINCIPAL — MOSTRA O GRÁFICO
    ============================================================ */
-Plotly.newPlot("grafico", [criarTrace(lojasValues, lojasLabels, colorLojas)], layout);
+function mostrarRank(tipo) {
+
+    const area = document.getElementById("graficoArea");
+    const grafico = document.getElementById("graficoRank");
+    const titulo = document.getElementById("tituloRank");
+
+    area.classList.remove("oculto");
+
+    if (tipo === "loja") {
+        titulo.innerText = "Ranking — Lojas";
+        Plotly.newPlot(grafico, [criarTrace(lojasValues, lojasLabels)], layout);
+        animar();
+    }
+
+    if (tipo === "vd") {
+        titulo.innerText = "Ranking — VD";
+        Plotly.newPlot(grafico, [criarTrace(vdValues, vdLabels)], layout);
+        animar();
+    }
+
+    // coloca botões internos de troca
+    colocarBotoesTroca();
+}
 
 
 
 /* ============================================================
-   🔵 6. ANIMAÇÕES
+   🔵 6. ANIMAÇÃO AUTOMÁTICA AO EXIBIR
    ============================================================ */
-function animarLojas() {
-    Plotly.animate("grafico", {
-        data: [criarTrace(lojasValues, lojasLabels, colorLojas)]
-    }, {transition: {duration: 700, easing: "cubic-in-out"}});
-}
-
-function animarVD() {
-    Plotly.animate("grafico", {
-        data: [criarTrace(vdValues, vdLabels, colorVD)]
-    }, {transition: {duration: 700, easing: "cubic-in-out"}});
+function animar() {
+    Plotly.animate("graficoRank", {}, {
+        transition: { duration: 650, easing: "cubic-in-out" }
+    });
 }
 
 
 
 /* ============================================================
-   🔵 7. DOWNLOAD DE IMAGEM
+   🔵 7. DOWNLOAD DO GRÁFICO
    ============================================================ */
 function baixarImagem() {
-    Plotly.downloadImage("grafico", {
+    Plotly.downloadImage("graficoRank", {
         format: "png",
         filename: "rank",
         width: 1600,
@@ -108,8 +131,50 @@ function baixarImagem() {
 
 
 /* ============================================================
-   🔵 8. THEME (OPCIONAL)
+   🔵 8. BOTÃO VOLTAR
    ============================================================ */
-document.getElementById("toggle-theme").addEventListener("click", ()=>{
-    document.body.classList.toggle("dark-theme");
-});
+function voltar() {
+    document.getElementById("graficoArea").classList.add("oculto");
+}
+
+
+
+/* ============================================================
+   🔵 9. BOTÕES INTERNOS PARA TROCAR ENTRE LOJA / VD
+   ============================================================ */
+function colocarBotoesTroca() {
+
+    if (document.getElementById("btnTrocaL")) return; // evita duplicar
+
+    const titulo = document.getElementById("tituloRank");
+    const container = titulo.parentElement;
+
+    const btnL = document.createElement("button");
+    btnL.id = "btnTrocaL";
+    btnL.className = "btn-voltar";
+    btnL.style.marginLeft = "10px";
+    btnL.innerText = "Lojas";
+    btnL.onclick = () => mostrarRank("loja");
+
+    const btnV = document.createElement("button");
+    btnV.id = "btnTrocaV";
+    btnV.className = "btn-voltar";
+    btnV.style.marginLeft = "5px";
+    btnV.innerText = "VD";
+    btnV.onclick = () => mostrarRank("vd");
+
+    container.appendChild(btnL);
+    container.appendChild(btnV);
+}
+
+
+
+/* ============================================================
+   🔵 10. THEME (OPCIONAL)
+   ============================================================ */
+const themeBtn = document.getElementById("toggle-theme");
+if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-theme");
+    });
+}
