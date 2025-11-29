@@ -39,3 +39,11 @@ body{margin:0;background:var(--bg);color:#fff;font-family:Inter,Arial,Helvetica,
 
 /* fade helpers */
 #ranking-container{opacity:1;transition:opacity .4s;}
+
+
+/* Orange logo outline */
+.logo img {
+    border: 3px solid #ff7a00;
+    border-radius: 14px;
+    padding: 4px;
+}
