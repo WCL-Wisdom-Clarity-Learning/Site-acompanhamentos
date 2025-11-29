@@ -1,55 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acompanhamentos | W.C.L</title>
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Início</title>
+<link rel="stylesheet" href="css/style.css"></head><body>
+<header class="topbar">
+  <div class="logo"><img src="assets/logo.png" alt="logo" style="height:48px;border-radius:50%"/> <span>W.C.L 🚀</span></div>
+  <nav class="topnav">
+    <a href="index.html">Início</a>
+    <a href="pages/contribuicoes.html" class="active">Contribuições</a>
+    <a href="pages/opensource.html">OpenSource</a>
+  </nav>
+  <div class="banner-btn">Área para banner</div>
+</header>
 
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./assets/responsive-overrides.css">
+<main class="content">
+  <div class="rank-switch"><button data-type="loja">Loja</button><button data-type="vd">VD</button></div>
+  <div class="rank-frame"><div id="ranking-container"></div></div>
+</main>
 
-    <!-- Plotly -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
+<footer class="footer">
+  <p>© W.C.L 🚀 | Meu Portfólio</p>
+  <p><strong>Espaço para Ads:</strong> Cole seu script aqui</p>
+</footer>
 
-<body>
-
-    <!-- CABEÇALHO -->
-    <header class="header">
-        <div class="logo-area">
-            <img src="img/W.C.L.jpg" alt="Logo W.C.L" class="logo-img">
-            <span class="logo-text">W.C.L 🚀</span>
-        </div>
-        <h1 class="titulo-header">Acompanhamentos</h1>
-    </header>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="container">
-
-        <!-- CARDS -->
-        <div class="cards-wrapper">
-
-            <div class="card" onclick="mostrarRank('loja')">
-                <img src="img/Meta-Atingida.png" class="card-img" alt="Rank Loja">
-                <p class="card-title">Rank Loja</p>
-            </div>
-
-            <div class="card" onclick="mostrarRank('vd')">
-                <img src="img/Meta-Atingida.png" class="card-img" alt="Rank VD">
-                <p class="card-title">Rank VD</p>
-            </div>
-
-        </div>
-
-        <!-- ÁREA DO GRÁFICO -->
-        <section id="graficoArea" class="grafico-area oculto">
-            <button class="btn-voltar" onclick="voltar()">← Voltar</button>
-            <h2 id="tituloRank"></h2>
-            <div id="graficoRank"></div>
-        </section>
-
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+<script src="script.js"></script>
+<script>
+// trigger bar animations after content load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    document.querySelectorAll('.rank-row .bar span').forEach(function(s){
+      s.style.width = s.getAttribute('data-width') || s.style.width;
+    });
+  },300);
+});
+</script>
+</body></html>

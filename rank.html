@@ -1,9 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rank</title>
+<link rel="stylesheet" href="css/style.css"></head><body>
+<header class="topbar">
+  <div class="logo"><img src="assets/logo.png" alt="logo" style="height:48px;border-radius:50%"/> <span>W.C.L 🚀</span></div>
+  <nav class="topnav">
+    <a href="index.html">Início</a>
+    <a href="pages/contribuicoes.html" class="active">Contribuições</a>
+    <a href="pages/opensource.html">OpenSource</a>
+  </nav>
+  <div class="banner-btn">Área para banner</div>
+</header>
 
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>Rank</title>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script></head>
-<body><div id='chart' style='width:100%;height:600px;'></div>
+<main class="content">
+  <div class="rank-switch"><button data-type="loja">Loja</button><button data-type="vd">VD</button></div>
+  <div class="rank-frame"><div id="ranking-container"></div></div>
+</main>
+
+<footer class="footer">
+  <p>© W.C.L 🚀 | Meu Portfólio</p>
+  <p><strong>Espaço para Ads:</strong> Cole seu script aqui</p>
+</footer>
+
+<script src="script.js"></script>
 <script>
-var lojas=['Loja A','Loja B','Loja C'], valores=[120,90,70];
-var data=[{x:lojas,y:valores,type:'bar'}];
-Plotly.newPlot('chart', data);
-</script></body></html>
+// trigger bar animations after content load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    document.querySelectorAll('.rank-row .bar span').forEach(function(s){
+      s.style.width = s.getAttribute('data-width') || s.style.width;
+    });
+  },300);
+});
+</script>
+</body></html>

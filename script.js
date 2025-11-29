@@ -1,180 +1,141 @@
-/* ============================================================
-   🔵 1. EDITAR OS DADOS AQUI — (COLAR NOVOS DADOS SEM MEXER NO RESTO)
-   ============================================================ */
-const lojasLabels = ["BR", "CN", "SP", "VP", "ST", "MS", "CF", "PF"];
-const lojasValues = [68.45, 66.83, 66.00, 60.08, 50.00, 49.27, 46.62, 36.22];
 
-const vdLabels = ["ERS", "ERP", "CD"];
-const vdValues = [97.61, 96.43, 94.57];
-/* ============================================================ */
+/* Generated script.js: fetch ranking and render */
+async function fetchJSON(path){
+  const res = await fetch(path);
+  if(!res.ok) throw new Error('Network error');
+  return res.json();
+}
 
-
-
-/* ============================================================
-   🔵 2. CONFIGURAÇÃO VISUAL DO GRÁFICO
-   ============================================================ */
-const barThickness = 22;
-const barGap = 0.35;
-const fontSize = 18;
-
-const color1 = "#d4af37"; // ouro
-const color2 = "#c0c0c0"; // prata
-const color3 = "#cd7f32"; // bronze
-const colorDefault = "#008b8b"; // padrão
+async function loadRanking(){
+  try{
+    const data = await fetchJSON('/api/ranking.json');
+    renderRanking(data);
+  }catch(e){console.error(e);}
+}
 
 
+window.addEventListener('DOMContentLoaded', function(){ loadRanking(); loadContribuicoes(); });
 
-/* ============================================================
-   🔵 3. CRIA TRACE COM CORES DINÂMICAS POR POSIÇÃO
-   ============================================================ */
-function criarTrace(valores, labels) {
+async function loadContribuicoes(){
+  try{
+    const list = await fetchJSON('/api/contribuicoes.json');
+    renderContribs(list);
+  }catch(e){console.warn('contribs',e);}
+}
 
-    // Ordena automaticamente
-    const combinado = valores
-        .map((v, i) => ({ valor: v, label: labels[i] }))
-        .sort((a, b) => b.valor - a.valor);
-
-    const valoresOrd = combinado.map(o => o.valor);
-    const labelsOrd = combinado.map(o => o.label);
-
-    // Cores por ranking
-    const cores = valoresOrd.map((_, i) => {
-        if (i === 0) return color1;
-        if (i === 1) return color2;
-        if (i === 2) return color3;
-        return colorDefault;
-    });
-
-    return {
-        x: valoresOrd,
-        y: labelsOrd.map((l, i) => `🏆 ${i + 1}   ${l}`),
-        type: "bar",
-        orientation: "h",
-        text: valoresOrd.map(v => v.toFixed(2) + "%"),
-        textposition: "outside",
-        marker: { color: cores, line: { width: 1 } },
-        textfont: { size: fontSize },
-        hoverinfo: "none",
-        width: barThickness
-    };
+function renderContribs(list){
+  const grid = document.getElementById('contrib-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  list.forEach(function(item){
+    const card = document.createElement('div');
+    card.className='contrib-card';
+    card.innerHTML = '<h3>' + (item.titulo || '') + '</h3><p>' + (item.descricao || '') + '</p><a href="' + (item.link||'#') + '" target="_blank">Ver</a>';
+    grid.appendChild(card);
+  });
 }
 
 
 
-/* ============================================================
-   🔵 4. LAYOUT — FUNDO TRANSPARENTE
-   ============================================================ */
-const layout = {
-    title: "",
-    xaxis: { showgrid: false, zeroline: false, tickfont: { size: 16 } },
-    yaxis: { autorange: "reversed", tickfont: { size: 18 } },
-    margin: { l: 140, r: 80, t: 40, b: 40 },
-    bargap: barGap,
-    plot_bgcolor: "rgba(0,0,0,0)",
-    paper_bgcolor: "rgba(0,0,0,0)"
-};
+/* --- Navigation active state --- */
+function setActiveNav(){
+  try{
+    var links = document.querySelectorAll('.topnav a');
+    links.forEach(function(a){
+      try{
+        var linkPath = new URL(a.getAttribute('href'), location.href).pathname.replace(/\/+$/, '');
+        var curr = location.pathname.replace(/\/+$/, '');
+        if(linkPath === curr || (linkPath !== '' && curr.endsWith(linkPath)) ){
+          a.classList.add('active');
+        } else {
+          a.classList.remove('active');
+        }
+      }catch(e){ /* ignore */ }
+    });
+  }catch(e){}
+}
 
+/* --- Ranking toggle Loja / VD --- */
+var currentRankingType = 'loja'; // default
 
-
-/* ============================================================
-   🔵 5. FUNÇÃO PRINCIPAL — MOSTRA O GRÁFICO
-   ============================================================ */
-function mostrarRank(tipo) {
-
-    const area = document.getElementById("graficoArea");
-    const grafico = document.getElementById("graficoRank");
-    const titulo = document.getElementById("tituloRank");
-
-    area.classList.remove("oculto");
-
-    if (tipo === "loja") {
-        titulo.innerText = "Ranking — Lojas";
-        Plotly.newPlot(grafico, [criarTrace(lojasValues, lojasLabels)], layout);
-        animar();
+async function loadRanking(type){
+  currentRankingType = type || currentRankingType || 'loja';
+  var path = '/api/ranking.json';
+  if(currentRankingType === 'vd') path = '/api/ranking_vd.json';
+  // try fallback to default if not exists
+  try{
+    var res = await fetch(path);
+    if(!res.ok) throw new Error('not found');
+    var data = await res.json();
+    renderRanking(data);
+  }catch(e){
+    if(path !== '/api/ranking.json'){
+      try{
+        var res2 = await fetch('/api/ranking.json');
+        if(res2.ok){ var data2 = await res2.json(); renderRanking(data2); return; }
+      }catch(e2){ console.error('fallback failed', e2); }
     }
+    console.error('Failed to load ranking', e);
+    // show empty state
+    var c = document.getElementById('ranking-container');
+    if(c) c.innerHTML = '<p style="color:#777">Ranking indisponível.</p>';
+  }
+}
 
-    if (tipo === "vd") {
-        titulo.innerText = "Ranking — VD";
-        Plotly.newPlot(grafico, [criarTrace(vdValues, vdLabels)], layout);
-        animar();
+/* Attach toggle buttons */
+function initRankSwitch(){
+  try{
+    var btns = document.querySelectorAll('.rank-switch button');
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        btns.forEach(function(x){ x.classList.remove('active'); });
+        b.classList.add('active');
+        var t = (b.getAttribute('data-type') || b.textContent || '').toLowerCase();
+        if(t.indexOf('vd')!==-1) loadRanking('vd'); else loadRanking('loja');
+      });
+    });
+  }catch(e){}
+}
+
+/* Ensure active nav set on load and history navigation */
+window.addEventListener('DOMContentLoaded', function(){
+  setActiveNav();
+  initRankSwitch();
+});
+window.addEventListener('popstate', setActiveNav);
+
+
+/* Fade animation */
+function fadeOutIn(el, callback){
+  if(!el) return callback&&callback();
+  el.style.opacity = 1;
+  el.style.transition = 'opacity 0.4s';
+  el.style.opacity = 0;
+  setTimeout(function(){
+    callback&&callback();
+    el.style.opacity = 0;
+    setTimeout(function(){
+      el.style.opacity = 1;
+    },20);
+  },400);
+}
+
+function renderRanking(data){
+  var c = document.getElementById('ranking-container');
+  fadeOutIn(c, function(){
+    var html = '';
+    if(data && Array.isArray(data)){
+      data.forEach(function(item){
+        html += `
+          <div class="rank-row">
+            <span class="pos">${item.pos}</span>
+            <span class="sigla">${item.sigla}</span>
+            <div class="bar"><div class="fill" style="width:${item.percent}%"></div></div>
+            <span class="pct">${item.percent}%</span>
+          </div>
+        `;
+      });
     }
-
-    // coloca botões internos de troca
-    colocarBotoesTroca();
-}
-
-
-
-/* ============================================================
-   🔵 6. ANIMAÇÃO AUTOMÁTICA AO EXIBIR
-   ============================================================ */
-function animar() {
-    Plotly.animate("graficoRank", {}, {
-        transition: { duration: 650, easing: "cubic-in-out" }
-    });
-}
-
-
-
-/* ============================================================
-   🔵 7. DOWNLOAD DO GRÁFICO
-   ============================================================ */
-function baixarImagem() {
-    Plotly.downloadImage("graficoRank", {
-        format: "png",
-        filename: "rank",
-        width: 1600,
-        height: 900
-    });
-}
-
-
-
-/* ============================================================
-   🔵 8. BOTÃO VOLTAR
-   ============================================================ */
-function voltar() {
-    document.getElementById("graficoArea").classList.add("oculto");
-}
-
-
-
-/* ============================================================
-   🔵 9. BOTÕES INTERNOS PARA TROCAR ENTRE LOJA / VD
-   ============================================================ */
-function colocarBotoesTroca() {
-
-    if (document.getElementById("btnTrocaL")) return; // evita duplicar
-
-    const titulo = document.getElementById("tituloRank");
-    const container = titulo.parentElement;
-
-    const btnL = document.createElement("button");
-    btnL.id = "btnTrocaL";
-    btnL.className = "btn-voltar";
-    btnL.style.marginLeft = "10px";
-    btnL.innerText = "Lojas";
-    btnL.onclick = () => mostrarRank("loja");
-
-    const btnV = document.createElement("button");
-    btnV.id = "btnTrocaV";
-    btnV.className = "btn-voltar";
-    btnV.style.marginLeft = "5px";
-    btnV.innerText = "VD";
-    btnV.onclick = () => mostrarRank("vd");
-
-    container.appendChild(btnL);
-    container.appendChild(btnV);
-}
-
-
-
-/* ============================================================
-   🔵 10. THEME (OPCIONAL)
-   ============================================================ */
-const themeBtn = document.getElementById("toggle-theme");
-if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-theme");
-    });
+    c.innerHTML = html;
+  });
 }
