@@ -1,16 +1,84 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contato</title><link rel="stylesheet" href="../css/style.css"></head><body>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Contato</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
 <header class="topbar">
-  <div class="logo"><img src="../assets/W.C.L.jpg" alt="logo" style="height:48px;border-radius:50%"/> <span>W.C.L 🚀</span></div>
+  <div class="logo">
+    <img src="/assets/W.C.L.jpg" alt="logo" style="height:110px; border-radius:110%">
+    <span>W.C.L 🚀</span>
+  </div>
+
   <nav class="topnav">
-    <a href="../index.html">Início</a>
-    <a href="../pages/contribuicoes.html" class="active">Contribuições</a>
-    <a href="../pages/opensource.html">OpenSource</a>
+    <a href="/index.html">Início</a>
+    <a href="/pages/contribuicoes.html">Contribuições</a>
+    <a href="/pages/opensource.html">OpenSource</a>
   </nav>
-  <div class="banner-btn">Área para banner</div>
+
+  <!-- Redes sociais + contato (DESKTOP) -->
+  <div class="header-actions desktop-only">
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/wellington-carlos-lima" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/limaedeia/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com/@WCLTechProdutividade" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://github.com/WCL-Wisdom-Clarity-Learning" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
 </header>
-<main class="content"><h1>Contato</h1></main>
+
+
+<!-- BANNER -->
+<main class="content">
+  <div class="banner-area"><img src="/assets/Banner.png" alt="Banner" class="banner-img"></div>
+
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="contato-container">
+
+    <!-- Esquerda -->
+    <div class="contato-info">
+      <h2><span>📩</span> Entre em contato</h2>
+
+      <h3>Email</h3>
+      <p><a href="mailto:contat.wcl@gmail.com">contat.wcl@gmail.com</a></p>
+
+      <h3>W.C.L</h3>
+      <p>wisdom-clarity-learning</p>
+
+      <h3>Endereço</h3>
+      <p>Rua Exemplo, ***<br>São Paulo - SP</p>
+    </div>
+
+    <!-- Direita (FORMULÁRIO) -->
+    <div class="contato-form">
+      <h2><span>📨</span> Mande sua mensagem</h2>
+
+      <form id="contatoForm" action="https://formspree.io/f/xyzdnwql" method="POST">
+        <div class="form-group">
+          <input type="text" name="nome" placeholder="Seu nome" required>
+          <input type="email" name="email" placeholder="Seu email" required>
+        </div>
+
+        <textarea name="mensagem" placeholder="Digite sua mensagem..." required></textarea>
+
+        <button type="submit" class="btn-enviar">Enviar</button>
+
+        <p id="formStatus" class="status info">Todos os campos são obrigatórios.</p>
+      </form>
+    </div>
+
+</main>
+
+
 <footer class="footer">
-  <p>© W.C.L 🚀 | Meu Portfólio</p>
-  <p><strong>Espaço para Ads:</strong> Cole seu script aqui</p>
+    <p>© W.C.L 🚀 | Meu Portfólio</p>
 </footer>
-<script src="../script.js"></script></body></html>
+
+</body>
+</html>
